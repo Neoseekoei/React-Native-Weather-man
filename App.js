@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Image,ImageBackground } from 'react-native';
 
 const api = {
   key: "9b2e069ec37a6e020e7a6b62a2fbd392",
@@ -33,8 +33,14 @@ const App = () => {
   }
 
   return (
+    <View>
+       <ImageBackground
+        style={styles.tinyLogo}
+        source={require('./assets/blue-sky.jfif')}
+      />
     <View style={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? styles.warm : styles.container)
       : styles.container}>
+       
       <View style={styles.searchBox}>
         <TextInput
           style={styles.searchBar}
@@ -48,7 +54,7 @@ const App = () => {
         </TouchableOpacity>
       </View>
       {(typeof weather.main != "undefined") ? (
-        <View>
+        <View style={styles.info}>
           {/* <Image
           style={styles.icon}
           source={{
@@ -56,7 +62,7 @@ const App = () => {
           }}/> */}
           <Text style={styles.country}>{weather.name}, {weather.sys.country}</Text>
           <Text style={styles.country}>{Math.round(weather.main.temp)}°C</Text>
-          <Text style={styles.extras}>{weather.weather[0].main}</Text>
+          <Text style={styles.country}>{weather.weather[0].main}</Text>
           <Text style={styles.extras}>Feels Like:{Math.round(weather.main.feels_like)}</Text>
           <Text style={styles.extras}>Humidity:{(weather.main.humidity)}</Text>
           <Text style={styles.extras}>Pressure:{Math.round(weather.main.pressure)}</Text>
@@ -64,6 +70,7 @@ const App = () => {
           <Text style={styles.extras}>Max:{Math.round(weather.main.temp_max)}</Text>
         </View>
       ) : null}
+    </View>
     </View>
   );
 };
@@ -73,7 +80,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    position:'absolute',
+    zIndex:1,
+    marginTop:200,
+    marginLeft:50,
+
   },
   warm: {
     flex: 1,
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
   searchBar: {
     height: 40,
     width: 200,
-    borderColor: 'gray',
+    borderColor: 'white',
     borderWidth: 1,
     marginRight: 10,
     paddingHorizontal: 10,
@@ -107,12 +118,24 @@ const styles = StyleSheet.create({
     fontSize:25,
     fontWeight:700,
     color:'green',
-    textAlign:'center'
+    textAlign:'center',
+    marginBottom:20
+    
   },
 
   extras:{
     fontSize:20,
-    fontWeight:500
+    fontWeight:500,
+    color:'white',
+  },
+
+  tinyLogo:{
+    height:900,
+    width:400
+  },
+
+  info:{
+    marginTop:100
   }
 
 });
